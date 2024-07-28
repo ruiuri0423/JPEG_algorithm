@@ -45,24 +45,21 @@ function output = FIDCT_2D(size, input)
                     % Compute the DCT
                     if rem(n, 2) == 0
                         qoutient_pi = 0;
-                        input_ja = u_m * u_n * input(m + 1, n + 1);
-                        input_jb = u_m * u_n * input(m + 1, n + 1);
-                        cos_basis_signed = sign_cos_pos * cos_basis_pos + sign_cos_neg * cos_basis_neg;
-                        output_ja = output_ja + input_ja * cos_basis_signed;
-                        output_jb = output_jb + input_jb * cos_basis_signed;
+                        input_j = input(m + 1, n + 1) * 0.5;
+                        cos_basis_signed = u_m * u_n * ( ...
+                            sign_cos_pos * cos_basis_pos + sign_cos_neg * cos_basis_neg);
+                        output(i + 1, ja + 1) = output(i + 1, ja + 1) + input_j * cos_basis_signed;
+                        output(i + 1, jb + 1) = output(i + 1, jb + 1) + input_j * cos_basis_signed;
                     else
                         qoutient_pi = floor((p * i + (p - 1) / 2) / size);
-                        input_ja = power(-1, qoutient_pi) * u_m * u_n * input(m + 1, n + 1);
-                        input_jb = power(-1, (qoutient_pi + 1)) * u_m * u_n * input(m + 1, n + 1);
-                        cos_basis_signed = sign_cos_pos * cos_basis_pos + sign_cos_neg * cos_basis_neg;
-                        output_ja = output_ja + input_ja * cos_basis_signed;
-                        output_jb = output_jb + input_jb * cos_basis_signed;
+                        input_j = power(-1,  qoutient_pi) * input(m + 1, n + 1) * 0.5;
+                        cos_basis_signed = u_m * u_n * ( ...
+                            sign_cos_pos * cos_basis_pos + sign_cos_neg * cos_basis_neg);
+                        output(i + 1, ja + 1) = output(i + 1, ja + 1) + input_j * cos_basis_signed;
+                        output(i + 1, jb + 1) = output(i + 1, jb + 1) - input_j * cos_basis_signed;
                     end
                 end
             end
-
-            output(i + 1, ja + 1) = output_ja * 0.5;
-            output(i + 1, jb + 1) = output_jb * 0.5;
         end 
     end
 end
