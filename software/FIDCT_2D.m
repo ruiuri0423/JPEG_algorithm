@@ -45,15 +45,15 @@ function output = FIDCT_2D(size, input)
                     % Compute the DCT
                     if rem(n, 2) == 0
                         qoutient_pi = 0;
-                        input_j = input(m + 1, n + 1) * 0.5;
-                        cos_basis_signed = u_m * u_n * ( ...
+                        input_j = input(m + 1, n + 1);
+                        cos_basis_signed = 0.5 * u_m * u_n * ( ...
                             sign_cos_pos * cos_basis_pos + sign_cos_neg * cos_basis_neg);
                         output(i + 1, ja + 1) = output(i + 1, ja + 1) + input_j * cos_basis_signed;
                         output(i + 1, jb + 1) = output(i + 1, jb + 1) + input_j * cos_basis_signed;
                     else
                         qoutient_pi = floor((p * i + (p - 1) / 2) / size);
-                        input_j = power(-1,  qoutient_pi) * input(m + 1, n + 1) * 0.5;
-                        cos_basis_signed = u_m * u_n * ( ...
+                        input_j = power(-1,  qoutient_pi) * input(m + 1, n + 1);
+                        cos_basis_signed = 0.5 * u_m * u_n * ( ...
                             sign_cos_pos * cos_basis_pos + sign_cos_neg * cos_basis_neg);
                         output(i + 1, ja + 1) = output(i + 1, ja + 1) + input_j * cos_basis_signed;
                         output(i + 1, jb + 1) = output(i + 1, jb + 1) - input_j * cos_basis_signed;
